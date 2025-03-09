@@ -37,13 +37,13 @@ seasonal_data_registered = seasonal_data_registered.sort_values(by='registered_d
 fig_casual = px.bar(seasonal_data_casual, x='season_name', y='casual_daily',
                     title='Jumlah Rata-rata Sewa Harian (Casual Users)',
                     labels={'casual_daily': 'Rata-rata Jumlah Sewa Harian', 'season_name': 'Musim'},
-                    color='casual_daily', color_continuous_scale='reds',template='plotly_dark')
+                    color='casual_daily', color_continuous_scale='blues',template='plotly_dark')
 
 # Plot for Registered Users
 fig_registered = px.bar(seasonal_data_registered, x='season_name', y='registered_daily',
                         title='Jumlah Rata-rata Sewa Harian (Registered Users)',
                         labels={'registered_daily': 'Rata-rata Jumlah Sewa Harian', 'season_name': 'Musim'},
-                        color='registered_daily', color_continuous_scale='blues',template='plotly_dark')
+                        color='registered_daily', color_continuous_scale='reds',template='plotly_dark')
 
 # Display the plots
 st.plotly_chart(fig_casual)
@@ -127,7 +127,7 @@ st.write('Analisis perbandingan aktivitas penyewaan sepeda menunjukkan bahwa jum
 # Menampilkan kesimpulan dari analisis
 st.header("Kesimpulan")
 st.write("Dari semua hasil analisis berikut adalah kesimpulan keseluruhan dari semua data tersebut")
-st.text(''' 1.Pengaruh Cuaca Terhadap Aktivitas Penyewaan:
+st.text('''1.Pengaruh Cuaca Terhadap Aktivitas Penyewaan:
 
 - Aktivitas penyewaan mencapai puncaknya pada musim gugur, diduga dipengaruhi oleh kondisi cuaca yang menyenangkan dan pemandangan yang memikat.
 - Walaupun terdapat penurunan, musim panas tetap menjadi salah satu periode dengan jumlah penyewaan yang tinggi.
@@ -140,8 +140,7 @@ st.text('''2. Pola Aktivitas Penyewaan Harian:
 - Pengguna terdaftar memiliki pola aktivitas yang berbeda, dengan penyewaan tertinggi pada pagi hari serta sore hingga malam, yang mengindikasikan penggunaan sepeda untuk perjalanan kerja atau kebutuhan harian.  
 - Secara keseluruhan, jumlah penyewaan mencapai puncaknya pada sore hingga malam hari.''')
 
-st.text('''
-        3. Perbedaan Penggunaan Sepeda antara Hari Kerja dan Hari Libur:
+st.text('''3. Perbedaan Penggunaan Sepeda antara Hari Kerja dan Hari Libur:
 - Aktivitas penyewaan sepeda cenderung lebih tinggi pada hari kerja dibandingkan hari libur.  
 - Hari kerja memberikan kontribusi positif terhadap penggunaan sepeda, yang mungkin dipengaruhi oleh kebutuhan komutasi dan rutinitas harian.''')
 
