@@ -16,30 +16,6 @@ df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
 st.title("🚲 Dashborad of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
-# Sidebar Filters
-st.sidebar.header("🔍 Filter Data")
-
-# Filter by Date Range
-df['dteday'] = pd.to_datetime(df['dteday'])
-date_range = st.sidebar.date_input("Pilih Rentang Tanggal:", [df['dteday'].min(), df['dteday'].max()])
-df_filtered = df[(df['dteday'] >= pd.to_datetime(date_range[0])) & (df['dteday'] <= pd.to_datetime(date_range[1]))]
-
-# Filter by Season
-season_options = {1: 'Spring 🌸', 2: 'Summer ☀️', 3: 'Fall 🍂', 4: 'Winter ❄️'}
-selected_season = st.sidebar.radio("Pilih Musim:", options=list(season_options.keys()), format_func=lambda x: season_options[x])
-df_filtered = df_filtered[df_filtered['season_daily'] == selected_season]
-
-# Filter by Weather Condition
-weather_options = {1: 'Clear ☀️', 2: 'Cloudy ☁️', 3: 'Light Rain 🌧️', 4: 'Heavy Rain ⛈️'}
-selected_weather = st.sidebar.radio("Pilih Kondisi Cuaca:", options=list(weather_options.keys()), format_func=lambda x: weather_options[x])
-df_filtered = df_filtered[df_filtered['weathersit_daily'] == selected_weather]
-
-# Filter by Hour Range
-hour_range = st.sidebar.slider("Pilih Rentang Jam:", 0, 23, (0, 23))
-df_filtered = df_filtered[(df_filtered['hr'] >= hour_range[0]) & (df_filtered['hr'] <= hour_range[1])]
-
-# Layout
-col1, col2 = st.columns(2)
 
 
                                   
@@ -69,8 +45,7 @@ fig_registered = px.bar(seasonal_data_registered, x='season_name', y='registered
                         labels={'registered_daily': 'Rata-rata Jumlah Sewa Harian', 'season_name': 'Musim'},
                         color='registered_daily', color_continuous_scale='blues',template='plotly_dark')
 
-col1.plotly_chart(fig_casual, use_container_width=True)
-col2.plotly_chart(fig_registered, use_container_width=True)
+
 # Display the plots
 st.plotly_chart(fig_casual)
 st.plotly_chart(fig_registered)
