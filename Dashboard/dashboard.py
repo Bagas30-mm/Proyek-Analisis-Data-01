@@ -19,7 +19,7 @@ st.write("Bagas Rizky Ramadhan")
 # Interactive Sidebar Filter
 st.sidebar.header("Filter Data")
 season_options = {1: 'Spring 🌸', 2: 'Summer ☀️', 3: 'Fall 🍂', 4: 'Winter ❄️'}
-selected_season = st.sidebar.radio("Pilih Musim:", options=list(season_options.keys()),
+selected_season = st.sidebar.radio("Pilih Musim:", options=list(season_options.keys()), format_func=lambda x: season_options[x]
 
 # Filter data based on selected season
 df_filtered = df[df['season_daily'] == selected_season]
