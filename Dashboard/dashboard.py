@@ -21,7 +21,7 @@ st.write("Bagas Rizky Ramadhan")
 
 
 # Menampilkan pertanyaan bisnis
-st.subheader("1. Seperti apa dampak cuaca terhadap aktivitas penyewaan sepeda berdasarkan kelompok pengguna casual dan registered?")
+st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
 
 
 st.subheader("Visualisasi Terpisah Pengguna Casual dan Registered.")
