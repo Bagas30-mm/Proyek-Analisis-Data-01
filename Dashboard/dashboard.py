@@ -16,9 +16,12 @@ df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
 st.title("Dashborad of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
+# Interactive Filter
+season_options = {1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'}
+selected_season = st.selectbox("Pilih Musim:", options=list(season_options.keys()), format_func=lambda x: season_options[x])
 
-
-
+# Filter data based on selected season
+df_filtered = df[df['season_daily'] == selected_season]
 
 # Menampilkan pertanyaan bisnis
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
