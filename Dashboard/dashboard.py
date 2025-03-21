@@ -11,14 +11,23 @@ hour = pd.read_csv('./Dashboard/hour.csv')
 
 
 df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
-
+df['dteday'] = pd.to_datetime(df['dteday'])
 # Mengatur judul dan deskripsi aplikasi
 st.title("🚲 Dashborad of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
+# **Filter Berdasarkan Rentang Tanggal**
+min_date = df['dteday'].min()
+max_date = df['dteday'].max()
+selected_date = st.slider("Pilih Rentang Tanggal:", min_value=min_date, max_value=max_date, value=(min_date, max_date))
 
+# **Filter Berdasarkan Musim**
+season_options = df['season_daily'].unique()
+selected_season = st.selectbox("Pilih Musim:", season_options) 
 
-                                  
+# Menerapkan Filter
+df_filtered = df[(df['dteday'] >= selected_date[0]) & (df['dteday'] <= selected_date[1])]
+df_filtered = df_filtered[df_filtered['season_daily'] == selected_season]
 
 # Menampilkan pertanyaan bisnis
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
