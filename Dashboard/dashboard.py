@@ -12,18 +12,6 @@ hour = pd.read_csv('./Dashboard/hour.csv')
 
 df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
 
-# Convert 'dteday' to datetime format
-df['dteday'] = pd.to_datetime(df['dteday'])
-
-# Sidebar for filters
-st.sidebar.header("Filter Data")
-selected_dates = st.sidebar.date_input("Pilih Rentang Tanggal", [df['dteday'].min(), df['dteday'].max()])
-
-# Filter data by selected dates
-if len(selected_dates) == 2:
-    df_filtered = df[(df['dteday'] >= pd.to_datetime(selected_dates[0])) & (df['dteday'] <= pd.to_datetime(selected_dates[1]))]
-else:
-    df_filtered = df
 
 # Streamlit UI
 st.title("Dashboard of Analyzing Bike Sharing Culture")
