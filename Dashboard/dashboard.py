@@ -28,7 +28,12 @@ selected_season = st.selectbox("Pilih Musim:", season_options)
 # Menerapkan Filter
 df_filtered = df[(df['dteday'] >= selected_date[0]) & (df['dteday'] <= selected_date[1])]
 df_filtered = df_filtered[df_filtered['season_daily'] == selected_season]
+# **Visualisasi Penyewaan Sepeda Berdasarkan Filter**
+st.subheader("Tren Penyewaan Sepeda Berdasarkan Filter")
+fig_filtered = px.line(df_filtered, x='dteday', y='cnt_daily', title="Tren Penyewaan Sepeda")
+st.plotly_chart(fig_filtered)
 
+st.write(f"Menampilkan data dari {selected_date[0].date()} hingga {selected_date[1].date()} untuk musim {selected_season}.")
 # Menampilkan pertanyaan bisnis
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
 
