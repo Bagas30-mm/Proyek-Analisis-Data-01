@@ -13,15 +13,19 @@ hour = pd.read_csv('./Dashboard/hour.csv')
 df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
 
 # Mengatur judul dan deskripsi aplikasi
-st.title("Dashborad of Analyzing Bike Sharing Culture")
+st.title("🚲 Dashborad of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
-# Interactive Filter
-season_options = {1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'}
-selected_season = st.selectbox("Pilih Musim:", options=list(season_options.keys()), format_func=lambda x: season_options[x])
+# Interactive Sidebar Filter
+st.sidebar.header("Filter Data")
+season_options = {1: 'Spring 🌸', 2: 'Summer ☀️', 3: 'Fall 🍂', 4: 'Winter ❄️'}
+selected_season = st.sidebar.radio("Pilih Musim:", options=list(season_options.keys()),
 
 # Filter data based on selected season
 df_filtered = df[df['season_daily'] == selected_season]
+
+# Layout
+col1, col2 = st.columns(2)                                   
 
 # Menampilkan pertanyaan bisnis
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
@@ -48,6 +52,8 @@ fig_registered = px.bar(seasonal_data_registered, x='season_name', y='registered
                         labels={'registered_daily': 'Rata-rata Jumlah Sewa Harian', 'season_name': 'Musim'},
                         color='registered_daily', color_continuous_scale='blues',template='plotly_dark')
 
+col1.plotly_chart(fig_casual, use_container_width=True)
+col2.plotly_chart(fig_registered, use_container_width=True)
 # Display the plots
 st.plotly_chart(fig_casual)
 st.plotly_chart(fig_registered)
