@@ -18,7 +18,13 @@ st.title("Dashboard of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
 
+# Fitur interaktif: Filter berdasarkan tanggal
+st.sidebar.header("Filter Data")
+selected_dates = st.sidebar.date_input("Pilih Rentang Tanggal", [pd.to_datetime(df['dteday']).min(), pd.to_datetime(df['dteday']).max()], key='date_range')
 
+if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
+    start_date, end_date = selected_dates
+    df = df[(pd.to_datetime(df['dteday']) >= pd.to_datetime(start_date)) & (pd.to_datetime(df['dteday']) <= pd.to_datetime(end_date))]
 
 # Menampilkan pertanyaan bisnis
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
