@@ -11,6 +11,29 @@ hour = pd.read_csv('./Dashboard/hour.csv')
 
 
 df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
+df['dteday'] = pd.to_datetime(df['dteday'])
+
+# Streamlit UI
+st.title("Dashboard of Analyzing Bike Sharing Culture")
+st.write("Bagas Rizky Ramadhan")
+
+
+# Filter berdasarkan rentang tanggal
+min_date = df['dteday'].min()
+max_date = df['dteday'].max()
+selected_date = st.slider("Pilih Rentang Tanggal:", min_value=min_date, max_value=max_date, value=(min_date, max_date))
+
+filtered_df = df[(df['dteday'] >= selected_date[0]) & (df['dteday'] <= selected_date[1])]
+
+# Filter berdasarkan musim
+season_options = {1: "Spring", 2: "Summer", 3: "Fall", 4: "Winter"}
+selected_season = st.selectbox("Pilih Musim:", options=list(season_options.keys()), format_func=lambda x: season_options[x])
+filtered_df = filtered_df[filtered_df['season_daily'] == selected_season]
+
+# Visualisasi
+st.subheader("Tren Penyewaan Sepeda")
+fig = px.line(filtered_df, x='dteday', y='cnt_daily', title="Tren Penyewaan Sepeda Berdasarkan Tanggal")
+st.plotly_chart(fig)
 
 # Menampilkan pertanyaan bisnis
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
@@ -40,6 +63,7 @@ fig_registered = px.bar(seasonal_data_registered, x='season_name', y='registered
 
 # Display the plots
 st.plotly_chart(fig_casual)
+st.plotly_chart(fig_season)
 st.plotly_chart(fig_registered)
 
 
