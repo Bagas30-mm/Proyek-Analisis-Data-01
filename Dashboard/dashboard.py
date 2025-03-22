@@ -26,6 +26,22 @@ if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
     start_date, end_date = selected_dates
     df = df[(pd.to_datetime(df['dteday']) >= pd.to_datetime(start_date)) & (pd.to_datetime(df['dteday']) <= pd.to_datetime(end_date))]
 
+# Fitur interaktif tambahan: Filter berdasarkan musim dan hari kerja
+selected_season = st.sidebar.multiselect("Pilih Musim", ['Spring', 'Summer', 'Fall', 'Winter'], ['Spring', 'Summer', 'Fall', 'Winter'])
+selected_workingday = st.sidebar.radio("Pilih Jenis Hari", ['Semua', 'Hari Kerja', 'Hari Libur'])
+
+# Filter data berdasarkan musim
+if selected_season:
+    season_map = {'Spring': 1, 'Summer': 2, 'Fall': 3, 'Winter': 4}
+    selected_season_codes = [season_map[season] for season in selected_season]
+    df = df[df['season_daily'].isin(selected_season_codes)]
+
+# Filter data berdasarkan jenis hari
+if selected_workingday == 'Hari Kerja':
+    df = df[df['workingday_daily'] == 1]
+elif selected_workingday == 'Hari Libur':
+    df = df[df['workingday_daily'] == 0]
+
 # Menampilkan pertanyaan bisnis
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
 
