@@ -12,36 +12,26 @@ hour = pd.read_csv('./Dashboard/hour.csv')
 
 df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
 
-# Mapping untuk musim
-season_map = {1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'}
-df['season_name'] = df['season_daily'].map(season_map)
+
 
 # Streamlit UI
 st.title("Dashboard of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
-# Sidebar untuk filter interaktif
-st.sidebar.header("Filter Data")
+# Filter interaktif
+st.sidebar.header("Filter Interaktif")
+selected_season = st.sidebar.multiselect("Pilih Musim:", ['Spring', 'Summer', 'Fall', 'Winter'], default=['Spring', 'Summer', 'Fall', 'Winter'])
+selected_workingday = st.sidebar.radio("Pilih Hari:", ['Semua', 'Hari Kerja', 'Hari Libur'])
 
-# Filter tanggal
-selected_dates = st.sidebar.date_input(
-    "Pilih Rentang Tanggal", [pd.to_datetime(df['dteday']).min(), pd.to_datetime(df['dteday']).max()]
-)
+# Mapping season names
+df['season_name'] = df['season_daily'].map({1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'})
 
-# Filter musim
-selected_seasons = st.sidebar.multiselect(
-    "Pilih Musim", options=df['season_name'].unique(), default=df['season_name'].unique()
-)
-
-# Filter jenis pengguna
-selected_user_type = st.sidebar.multiselect(
-    "Pilih Jenis Pengguna", ['Casual', 'Registered'], default=['Casual', 'Registered']
-)
-
-# Menerapkan filter
-df_filtered = df[(pd.to_datetime(df['dteday']).between(pd.to_datetime(selected_dates[0]), pd.to_datetime(selected_dates[1])))]
-df_filtered = df_filtered[df_filtered['season_name'].isin(selected_seasons)]
-
+# Filter data berdasarkan pilihan pengguna
+filtered_df = df[df['season_name'].isin(selected_season)]
+if selected_workingday == 'Hari Kerja':
+    filtered_df = filtered_df[filtered_df['workingday_daily'] == 1]
+elif selected_workingday == 'Hari Libur':
+    filtered_df = filtered_df[filtered_df['workingday_daily'] == 0]
 
 # Menampilkan pertanyaan bisnis
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
