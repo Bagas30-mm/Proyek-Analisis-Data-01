@@ -10,23 +10,32 @@ day = pd.read_csv('./Dashboard/day.csv')
 hour = pd.read_csv('./Dashboard/hour.csv') 
 df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
 
-
+# Mapping
+season_map = {1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'}
+day_map = {0: 'Hari Libur', 1: 'Hari Kerja'}
 
 # Streamlit UI
 st.title("Dashboard of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
 # Menambahkan fitur interaktif
-season_filter = st.multiselect('Pilih Musim:', options=['Spring', 'Summer', 'Fall', 'Winter'], default=['Spring', 'Summer', 'Fall', 'Winter'])
-day_filter = st.multiselect('Pilih Hari:', options=['Hari Kerja', 'Hari Libur'], default=['Hari Kerja', 'Hari Libur'])
+season_filter = st.multiselect('Pilih Musim:', options=list(season_map.values()), default=list(season_map.values()))
+day_filter = st.multiselect('Pilih Hari:', options=list(day_map.values()), default=list(day_map.values()))
 user_type_filter = st.multiselect('Pilih Tipe Pengguna:', options=['Casual', 'Registered'], default=['Casual', 'Registered'])
 
-# Mapping untuk filter
-season_map = {'Spring': 1, 'Summer': 2, 'Fall': 3, 'Winter': 4}
-day_map = {'Hari Kerja': 1, 'Hari Libur': 0}
+# Filter Data
+filtered_df = df[df['season_daily'].isin([k for k, v in season_map.items() if v in season_filter])]
+filtered_df = filtered_df[filtered_df['workingday_daily'].isin([k for k, v in day_map.items() if v in day_filter])]
 
-filtered_df = df[df['season_daily'].isin([season_map[season] for season in season_filter])]
-filtered_df = filtered_df[filtered_df['workingday_daily'].isin([day_map[day] for day in day_filter])]
+# Visualisasi Pengaruh Musim dan Tipe Pengguna
+st.subheader("Visualisasi Pengaruh Musim dan Tipe Pengguna")
+seasonal_data = filtered_df.groupby(['season_daily'])[['casual_daily', 'registered_daily']].mean().reset_index()
+seasonal_data['season_name'] = seasonal_data['season_daily'].map(season_map)
+
+# Filter visualisasi berdasarkan tipe pengguna
+filtered_seasonal_data = seasonal_data.melt(id_vars=['season_name'], value_vars=['casual_daily', 'registered_daily'],
+                                            var_name='User Type', value_name='Rata-rata Jumlah Sewa Harian')
+filtered_seasonal_data = filtered_seasonal_data[filtered_seasonal_data['User Type'].str.contains('|'.join(user_type_filter))]
 
 
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
