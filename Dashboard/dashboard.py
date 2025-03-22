@@ -76,7 +76,7 @@ plot_bar_chart(
     color_map={'Hari Kerja': 'salmon', 'Hari Libur': 'skyblue'},
     category_orders={'workingday_label': ['Hari Libur', 'Hari Kerja']}
 
-
+)
 st.write('Analisis perbandingan aktivitas penyewaan sepeda menunjukkan bahwa jumlah penyewaan lebih tinggi pada hari kerja dibandingkan hari libur. Grafik menggambarkan dampak positif hari kerja terhadap frekuensi penyewaan, dengan jumlah sewa harian yang lebih dominan. Untuk mengoptimalkan penyewaan, disarankan menyesuaikan penawaran pada hari kerja, seperti memberikan diskon di jam sibuk. Selain itu, pengembangan program khusus di hari libur, misalnya tur rekreasi atau paket promosi, dapat meningkatkan minat pelanggan. Penelitian lebih lanjut terkait faktor penyebab perbedaan penyewaan antara hari kerja dan hari libur direkomendasikan untuk mendapatkan wawasan yang lebih mendalam guna mendukung strategi peningkatan penyewaan sepeda.')
 
 # Menampilkan kesimpulan dari analisis
