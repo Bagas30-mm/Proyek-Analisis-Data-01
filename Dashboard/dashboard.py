@@ -36,9 +36,9 @@ st.write("Bagas Rizky Ramadhan")
 # Function to plot bar charts
 def plot_bar_chart(data, x, y, color, title, labels, color_scale=None, color_map=None, category_orders=None):
     if color_scale:
-        fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, color_continuous_scale=color_scale, template='plotly_dark')
+        fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, color_continuous_scale=color_scale)
     elif color_map:
-        fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, color_discrete_map=color_map, category_orders=category_orders, template='plotly_dark')
+        fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, color_discrete_map=color_map, category_orders=category_orders)
     else:
         fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels)
     st.plotly_chart(fig)
