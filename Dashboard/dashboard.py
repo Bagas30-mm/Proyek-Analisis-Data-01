@@ -49,7 +49,6 @@ seasonal_data = filtered_df.groupby(['season_name'])[['casual_daily', 'registere
 plot_bar_chart(seasonal_data, 'season_name', 'casual_daily', 'casual_daily', 'Jumlah Rata-rata Sewa Harian (Casual Users)', {'casual_daily': 'Rata-rata Jumlah Sewa Harian', 'season_name': 'Musim'}, 'reds')
 plot_bar_chart(seasonal_data, 'season_name', 'registered_daily', 'registered_daily', 'Jumlah Rata-rata Sewa Harian (Registered Users)', {'registered_daily': 'Rata-rata Jumlah Sewa Harian', 'season_name': 'Musim'}, 'blues')
 
-st.write(
 # Visualization 2: Hourly Activity
 st.subheader("2. Seperti apa perubahan pola aktivitas penyewaan sepeda sepanjang hari?")
 for user_type in ['casual_hourly', 'registered_hourly', 'cnt_hourly']:
