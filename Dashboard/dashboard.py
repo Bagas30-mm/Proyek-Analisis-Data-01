@@ -83,7 +83,7 @@ st.write('Analisis perbandingan aktivitas penyewaan sepeda menunjukkan bahwa jum
 # Menampilkan kesimpulan dari analisis
 st.header("Kesimpulan")
 st.write("Dari semua hasil analisis berikut adalah kesimpulan keseluruhan dari semua data tersebut")
-st.text('''1.Pengaruh Cuaca Terhadap Aktivitas Penyewaan:
+st.text('''1.Pengaruh musim Terhadap Aktivitas Penyewaan:
 
 - Aktivitas penyewaan mencapai puncaknya pada musim gugur, diduga dipengaruhi oleh kondisi cuaca yang menyenangkan dan pemandangan yang memikat.
 - Walaupun terdapat penurunan, musim panas tetap menjadi salah satu periode dengan jumlah penyewaan yang tinggi.
