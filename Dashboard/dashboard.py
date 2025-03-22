@@ -12,33 +12,37 @@ hour = pd.read_csv('./Dashboard/hour.csv')
 
 df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
 
+# Mapping untuk musim
+season_map = {1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'}
+df['season_name'] = df['season_daily'].map(season_map)
 
 # Streamlit UI
 st.title("Dashboard of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
-
-# Fitur interaktif: Filter data
+# Sidebar untuk filter interaktif
 st.sidebar.header("Filter Data")
-selected_dates = st.sidebar.date_input("Pilih Rentang Tanggal", [pd.to_datetime(df['dteday']).min(), pd.to_datetime(df['dteday']).max()], key='date_range')
-selected_season = st.sidebar.multiselect("Pilih Musim", ['Spring', 'Summer', 'Fall', 'Winter'], ['Spring', 'Summer', 'Fall', 'Winter'])
-selected_workingday = st.sidebar.radio("Pilih Jenis Hari", ['Semua', 'Hari Kerja', 'Hari Libur'])
 
-# Terapkan filter tanggal
-if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
-    start_date, end_date = selected_dates
-    df = df[(pd.to_datetime(df['dteday']) >= pd.to_datetime(start_date)) & (pd.to_datetime(df['dteday']) <= pd.to_datetime(end_date))]
+# Filter tanggal
+selected_dates = st.sidebar.date_input(
+    "Pilih Rentang Tanggal", [pd.to_datetime(df['dteday']).min(), pd.to_datetime(df['dteday']).max()]
+)
 
-# Terapkan filter musim
-season_map = {'Spring': 1, 'Summer': 2, 'Fall': 3, 'Winter': 4}
-selected_season_codes = [season_map[season] for season in selected_season]
-df = df[df['season_daily'].isin(selected_season_codes)]
+# Filter musim
+selected_seasons = st.sidebar.multiselect(
+    "Pilih Musim", options=df['season_name'].unique(), default=df['season_name'].unique()
+)
 
-# Terapkan filter hari kerja
-if selected_workingday == 'Hari Kerja':
-    df = df[df['workingday_daily'] == 1]
-elif selected_workingday == 'Hari Libur':
-    df = df[df['workingday_daily'] == 0]
+# Filter jenis pengguna
+selected_user_type = st.sidebar.multiselect(
+    "Pilih Jenis Pengguna", ['Casual', 'Registered'], default=['Casual', 'Registered']
+)
+
+# Menerapkan filter
+df_filtered = df[(pd.to_datetime(df['dteday']).between(pd.to_datetime(selected_dates[0]), pd.to_datetime(selected_dates[1])))]
+df_filtered = df_filtered[df_filtered['season_name'].isin(selected_seasons)]
+
+
 # Menampilkan pertanyaan bisnis
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
 
