@@ -34,8 +34,13 @@ st.title("Dashboard of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
 # Function to plot bar charts
-def plot_bar_chart(data, x, y, color, title, labels, color_scale):
-    fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, color_continuous_scale=color_scale, template='plotly_dark')
+def plot_bar_chart(data, x, y, color, title, labels, color_scale=None, color_map=None, category_orders=None):
+    if color_scale:
+        fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, color_continuous_scale=color_scale, template='plotly_dark')
+    elif color_map:
+        fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, color_discrete_map=color_map, category_orders=category_orders, template='plotly_dark')
+    else:
+        fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, template='plotly_dark')
     st.plotly_chart(fig)
 
 # Visualization 1: Seasonal Analysis
@@ -53,7 +58,7 @@ for user_type in ['casual_hourly', 'registered_hourly', 'cnt_hourly']:
 
 # Visualization 3: Working Day vs Holiday
 st.subheader("3. Berapa besar selisih penggunaan sepeda antara hari kerja dan hari libur?")
-plot_bar_chart(filtered_df, 'workingday_label', 'cnt_daily', 'workingday_label', 'Perbedaan Penggunaan Sepeda Harian Antara Hari Kerja dan Hari Libur', {'workingday_label': 'Hari', 'cnt_daily': 'Jumlah Penyewaan'}, 'solar')
+plot_bar_chart(filtered_df, 'workingday_label', 'cnt_daily', 'workingday_label', 'Perbedaan Penggunaan Sepeda Harian Antara Hari Kerja dan Hari Libur', {'workingday_label': 'Hari', 'cnt_daily': 'Jumlah Penyewaan'}, color_map={'Hari Kerja': 'salmon', 'Hari Libur': 'skyblue'}, category_orders={'workingday_label': ['Hari Libur', 'Hari Kerja']})
 
 # Conclusion
 st.header("Kesimpulan")
