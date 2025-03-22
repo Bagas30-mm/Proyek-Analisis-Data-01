@@ -18,7 +18,7 @@ df['season_name'] = df['season_daily'].map(season_map)
 df['workingday_label'] = df['workingday_daily'].apply(lambda x: 'Hari Kerja' if x == 1 else 'Hari Libur')
 
 # Sidebar Filters
-st.sidebar.title("Filters")
+st.sidebar.title("ClearPath")
 selected_season = st.sidebar.selectbox("Pilih Musim:", ['All'] + list(season_map.values()))
 selected_workingday = st.sidebar.radio("Pilih Hari:", ['All', 'Hari Kerja', 'Hari Libur'])
 
