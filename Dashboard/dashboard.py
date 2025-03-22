@@ -16,20 +16,17 @@ df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
 st.title("Dashboard of Analyzing Bike Sharing Culture")
 st.write("Bagas Rizky Ramadhan")
 
-# Filter interaktif
-st.sidebar.header("Filter Interaktif")
-selected_season = st.sidebar.multiselect("Pilih Musim:", ['Spring', 'Summer', 'Fall', 'Winter'], default=['Spring', 'Summer', 'Fall', 'Winter'])
-selected_workingday = st.sidebar.radio("Pilih Hari:", ['Semua', 'Hari Kerja', 'Hari Libur'])
+# Menambahkan fitur interaktif
+season_filter = st.multiselect('Pilih Musim:', options=['Spring', 'Summer', 'Fall', 'Winter'], default=['Spring', 'Summer', 'Fall', 'Winter'])
+day_filter = st.multiselect('Pilih Hari:', options=['Hari Kerja', 'Hari Libur'], default=['Hari Kerja', 'Hari Libur'])
+user_type_filter = st.multiselect('Pilih Tipe Pengguna:', options=['Casual', 'Registered'], default=['Casual', 'Registered'])
 
-# Mapping season names
-df['season_name'] = df['season_daily'].map({1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'})
+# Mapping untuk filter
+season_map = {'Spring': 1, 'Summer': 2, 'Fall': 3, 'Winter': 4}
+day_map = {'Hari Kerja': 1, 'Hari Libur': 0}
 
-# Filter data berdasarkan pilihan pengguna
-filtered_df = df[df['season_name'].isin(selected_season)]
-if selected_workingday == 'Hari Kerja':
-    filtered_df = filtered_df[filtered_df['workingday_daily'] == 1]
-elif selected_workingday == 'Hari Libur':
-    filtered_df = filtered_df[filtered_df['workingday_daily'] == 0]
+filtered_df = df[df['season_daily'].isin([season_map[season] for season in season_filter])]
+filtered_df = filtered_df[filtered_df['workingday_daily'].isin([day_map[day] for day in day_filter])]
 
 
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
