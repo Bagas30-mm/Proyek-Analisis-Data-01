@@ -49,13 +49,14 @@ seasonal_data = filtered_df.groupby(['season_name'])[['casual_daily', 'registere
 plot_bar_chart(seasonal_data, 'season_name', 'casual_daily', 'casual_daily', 'Jumlah Rata-rata Sewa Harian (Casual Users)', {'casual_daily': 'Rata-rata Jumlah Sewa Harian', 'season_name': 'Musim'}, 'reds')
 plot_bar_chart(seasonal_data, 'season_name', 'registered_daily', 'registered_daily', 'Jumlah Rata-rata Sewa Harian (Registered Users)', {'registered_daily': 'Rata-rata Jumlah Sewa Harian', 'season_name': 'Musim'}, 'blues')
 
+st.write(
 # Visualization 2: Hourly Activity
 st.subheader("2. Seperti apa perubahan pola aktivitas penyewaan sepeda sepanjang hari?")
 for user_type in ['casual_hourly', 'registered_hourly', 'cnt_hourly']:
     hourly_counts = filtered_df.groupby('hr')[user_type].mean().reset_index()
     color_scale = {'casual_hourly': 'Magenta', 'registered_hourly': 'Teal', 'cnt_hourly': 'Burg'}
     plot_bar_chart(hourly_counts, 'hr', user_type, user_type, f'Distribusi Penyewaan Sepeda berdasarkan Jam dalam Sehari ({user_type.replace("_hourly", "").title()} Users)', {'hr': 'Waktu Penyewaan', user_type: 'Jumlah Penyewaan'}, color_scale[user_type])
-
+st.write("Pada musim gugur, pengguna casual mencatatkan tingkat penyewaan sepeda tertinggi, didukung oleh cuaca yang nyaman serta keindahan lingkungan. Pengguna terdaftar juga menunjukkan jumlah penyewaan yang signifikan pada musim ini. Meskipun terjadi sedikit penurunan pada musim panas dibandingkan dengan musim gugur, musim panas tetap menjadi periode dengan penyewaan tinggi untuk pengguna casual dan cukup tinggi untuk pengguna terdaftar. Selama musim dingin, penyewaan dari kedua kelompok menurun drastis, yang kemungkinan disebabkan oleh cuaca yang kurang mendukung dan kecenderungan untuk melakukan aktivitas indoor. Pada musim semi, tingkat penyewaan berada pada level yang moderat, lebih rendah dibandingkan dengan musim gugur dan musim panas untuk kedua kelompok. Dibandingkan antara kedua kelompok, pengguna casual cenderung lebih aktif menyewa pada musim gugur, sementara pengguna terdaftar mencapai puncak penyewaan mereka pada musim panas. Kedua kelompok mengalami penurunan serupa selama musim dingin, dengan pola penyewaan yang relatif mirip terlihat pada musim semi.")
 # Visualization 3: Working Day vs Holiday
 st.subheader("3. Berapa besar selisih penggunaan sepeda antara hari kerja dan hari libur?")
 plot_bar_chart(filtered_df, 'workingday_label', 'cnt_daily', 'workingday_label', 'Perbedaan Penggunaan Sepeda Harian Antara Hari Kerja dan Hari Libur', {'workingday_label': 'Hari', 'cnt_daily': 'Jumlah Penyewaan'}, color_map={'Hari Kerja': 'salmon', 'Hari Libur': 'skyblue'}, category_orders={'workingday_label': ['Hari Libur', 'Hari Kerja']})
