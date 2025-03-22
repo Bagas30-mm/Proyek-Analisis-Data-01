@@ -40,7 +40,7 @@ def plot_bar_chart(data, x, y, color, title, labels, color_scale=None, color_map
     elif color_map:
         fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, color_discrete_map=color_map, category_orders=category_orders, template='plotly_dark')
     else:
-        fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels, template='plotly_dark')
+        fig = px.bar(data, x=x, y=y, color=color, title=title, labels=labels)
     st.plotly_chart(fig)
 
 # Visualization 1: Seasonal Analysis
