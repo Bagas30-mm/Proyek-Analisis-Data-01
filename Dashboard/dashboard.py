@@ -28,7 +28,14 @@ day_map = {'Hari Kerja': 1, 'Hari Libur': 0}
 filtered_df = df[df['season_daily'].isin([season_map[season] for season in season_filter])]
 filtered_df = filtered_df[filtered_df['workingday_daily'].isin([day_map[day] for day in day_filter])]
 
-
+# Interaksi dengan grafik data
+data_melted = pd.melt(seasonal_data, id_vars=['season_name'], value_vars=['casual_daily', 'registered_daily'],
+                      var_name='User Type', value_name='Rata-rata Jumlah Sewa Harian')
+fig_interactive = px.scatter(data_melted, x='season_name', y='Rata-rata Jumlah Sewa Harian', color='User Type',
+                             size='Rata-rata Jumlah Sewa Harian', hover_data=['season_name'],
+                             title='Interaksi Rata-rata Penyewaan Sepeda Berdasarkan Musim dan Tipe Pengguna',
+                             template='plotly_dark')
+st.plotly_chart(fig_interactive)
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
 st.subheader("Visualisasi Terpisah Pengguna Casual dan Registered.")
 # Group by daily season and calculate the mean for casual and registered users
