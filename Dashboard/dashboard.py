@@ -12,19 +12,6 @@ hour = pd.read_csv('./Dashboard/hour.csv')
 
 df = day.merge(hour, on='dteday', how='inner', suffixes=('_daily', '_hourly'))
 
-# Mengkoversi kolom tanggal ke format datetime
-df['dteday'] = pd.to_datetime(df['dteday'])
-df['year'] = df['dteday'].dt.year
-df['month'] = df['dteday'].dt.month
-df['day'] = df['dteday'].dt.day
-
-#Sidebar untuk input pengguna
-st.sidebar.title("Pengaturan Analisis")
-#Pilihan filter
-st.sidebar.header("Filter Data")
-selected_year = st.sidebar.selectbox("Pilih Tahun", df['year'].unique())
-selected_month = st.sidebar.selectbox("Pilih Bulan", range(1, 13))
-
 
 # Streamlit UI
 st.title("Dashboard of Analyzing Bike Sharing Culture")
