@@ -18,14 +18,19 @@ st.write("Bagas Rizky Ramadhan")
 
 # Filter interaktif
 st.sidebar.header("Filter Interaktif")
+selected_season = st.sidebar.multiselect("Pilih Musim:", ['Spring', 'Summer', 'Fall', 'Winter'], default=['Spring', 'Summer', 'Fall', 'Winter'])
 selected_workingday = st.sidebar.radio("Pilih Hari:", ['Semua', 'Hari Kerja', 'Hari Libur'])
 
-# Filter data berdasarkan pilihan pengguna
+# Mapping season names
+df['season_name'] = df['season_daily'].map({1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'})
 
+# Filter data berdasarkan pilihan pengguna
+filtered_df = df[df['season_name'].isin(selected_season)]
 if selected_workingday == 'Hari Kerja':
     filtered_df = filtered_df[filtered_df['workingday_daily'] == 1]
 elif selected_workingday == 'Hari Libur':
     filtered_df = filtered_df[filtered_df['workingday_daily'] == 0]
+
 
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
 st.subheader("Visualisasi Terpisah Pengguna Casual dan Registered.")
