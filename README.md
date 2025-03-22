@@ -7,5 +7,5 @@ pip install numpy pandas scipy matplotlib seaborn jupyter streamlit babel
 ```
 # Setup environment
 ```
-streamlit run dashboard.py
+streamlit run Dashboard
 ```
