@@ -62,7 +62,6 @@ st.write('Aktivitas harian penyewaan sepeda oleh pengguna casual mencapai puncak
 
 # Visualization 3: Working Day vs Holiday (Perbaikan Warna)
 st.subheader("3. Berapa besar selisih penggunaan sepeda antara hari kerja dan hari libur?")
-plot_bar_chart(filtered_df, 'workingday_label', 'cnt_daily', 'workingday_label', 'Perbedaan Penggunaan Sepeda Harian Antara Hari Kerja dan Hari Libur', {'workingday_label': 'Hari', 'cnt_daily': 'Jumlah Penyewaan'}, color_map={'Hari Kerja': 'salmon', 'Hari Libur': 'skyblue'}, category_orders={'workingday_label': ['Hari Libur', 'Hari Kerja']})
 
 workingday_counts = filtered_df.groupby('workingday_label')['cnt_daily'].mean().reset_index()
 
