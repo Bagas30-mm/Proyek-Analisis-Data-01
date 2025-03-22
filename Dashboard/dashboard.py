@@ -32,8 +32,8 @@ if selected_workingday != 'All':
 st.subheader("1. Bagaimana musim memengaruhi penyewaan sepeda oleh pengguna casual dan registered?")
 st.subheader("Visualisasi Terpisah Pengguna Casual dan Registered.")
 # Group by daily season and calculate the mean for casual and registered users
-seasonal_data_casual = df.groupby(['season_daily'])['casual_daily'].mean().reset_index()
-seasonal_data_registered = df.groupby(['season_daily'])['registered_daily'].mean().reset_index()
+seasonal_data_casual = filtered_df.groupby(['season_daily'])['casual_daily'].mean().reset_index()
+seasonal_data_registered = filtered_df.groupby(['season_daily'])['registered_daily'].mean().reset_index()
 seasonal_data_casual['season_name'] = ['Spring', 'Summer', 'Fall', 'Winter']
 seasonal_data_registered['season_name'] = ['Spring', 'Summer', 'Fall', 'Winter']
 seasonal_data_casual = seasonal_data_casual.sort_values(by='casual_daily', ascending=False)
