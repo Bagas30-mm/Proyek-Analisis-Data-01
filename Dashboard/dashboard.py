@@ -46,12 +46,12 @@ seasonal_data_registered['season_name'] = ['Spring', 'Summer', 'Fall', 'Winter']
 seasonal_data_casual = seasonal_data_casual.sort_values(by='casual_daily', ascending=False)
 seasonal_data_registered = seasonal_data_registered.sort_values(by='registered_daily', ascending=False)
 
-if 'Casual' in selected_user_type:
+
 fig_casual = px.bar(seasonal_data_casual, x='season_name', y='casual_daily',
                     title='Jumlah Rata-rata Sewa Harian (Casual Users)',
                     labels={'casual_daily': 'Rata-rata Jumlah Sewa Harian', 'season_name': 'Musim'},
                     color='casual_daily', color_continuous_scale='reds',template='plotly_dark')
-if 'Registered' in selected_user_type:
+
 # Plot for Registered Users
 fig_registered = px.bar(seasonal_data_registered, x='season_name', y='registered_daily',
                         title='Jumlah Rata-rata Sewa Harian (Registered Users)',
