@@ -60,31 +60,9 @@ for user_type in ['casual_hourly', 'registered_hourly', 'cnt_hourly']:
 
 st.write('Aktivitas harian penyewaan sepeda oleh pengguna casual mencapai puncaknya pada sore hingga malam hari, terutama sekitar pukul 17.00 hingga 18.00. Pola ini menunjukkan bahwa pengguna casual lebih sering memanfaatkan sepeda untuk kegiatan rekreasi atau aktivitas non-rutin pada waktu tersebut. Di sisi lain, pengguna terdaftar (registered users) memiliki pola yang berbeda, dengan puncak penyewaan terjadi pada dua periode, yaitu pagi sekitar pukul 8.00 dan sore hingga malam sekitar pukul 17.00 hingga 18.00. Hal ini mengindikasikan bahwa pengguna terdaftar lebih sering menggunakan sepeda untuk kebutuhan harian atau perjalanan kerja pada pagi dan sore hari. Secara keseluruhan, jumlah total penyewaan sepeda (count) mencapai puncaknya pada sore hingga malam, yang mencerminkan kombinasi dari pola kedua kelompok. Waktu-waktu tersebut menunjukkan tingginya popularitas penyewaan sepeda secara umum.')
 
-
 # Visualization 3: Working Day vs Holiday (Perbaikan Warna)
 st.subheader("3. Berapa besar selisih penggunaan sepeda antara hari kerja dan hari libur?")
-
-# Plot dengan color_discrete_map yang benar
 plot_bar_chart(filtered_df, 'workingday_label', 'cnt_daily', 'workingday_label', 'Perbedaan Penggunaan Sepeda Harian Antara Hari Kerja dan Hari Libur', {'workingday_label': 'Hari', 'cnt_daily': 'Jumlah Penyewaan'}, color_map={'Hari Kerja': 'salmon', 'Hari Libur': 'skyblue'}, category_orders={'workingday_label': ['Hari Libur', 'Hari Kerja']})
-
-
-
-# Agregasi Data untuk Menyamakan Frekuensi dengan Gambar
-workingday_counts = filtered_df.groupby('workingday_label')['cnt_daily'].mean().reset_index()
-
-# Plot dengan Tema Terang dan Warna Sesuai
-plot_bar_chart(
-    workingday_counts,
-    x='workingday_label',
-    y='cnt_daily',
-    color='workingday_label',
-    color_discrete_map={'Hari Kerja': 'salmon', 'Hari Libur': 'skyblue'},
-    labels={'workingday_label': 'Hari', 'cnt_daily': 'Jumlah Sewa Sepeda Harian'},
-    title='Perbandingan Penggunaan Sepeda per hari antara Hari Kerja dan Hari Libur',
-    category_orders={'workingday_label': ['Hari Libur', 'Hari Kerja']}
-)
-
-
 
 st.write('Analisis perbandingan aktivitas penyewaan sepeda menunjukkan bahwa jumlah penyewaan lebih tinggi pada hari kerja dibandingkan hari libur. Grafik menggambarkan dampak positif hari kerja terhadap frekuensi penyewaan, dengan jumlah sewa harian yang lebih dominan. Untuk mengoptimalkan penyewaan, disarankan menyesuaikan penawaran pada hari kerja, seperti memberikan diskon di jam sibuk. Selain itu, pengembangan program khusus di hari libur, misalnya tur rekreasi atau paket promosi, dapat meningkatkan minat pelanggan. Penelitian lebih lanjut terkait faktor penyebab perbedaan penyewaan antara hari kerja dan hari libur direkomendasikan untuk mendapatkan wawasan yang lebih mendalam guna mendukung strategi peningkatan penyewaan sepeda.')
 
