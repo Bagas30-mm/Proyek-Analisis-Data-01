@@ -34,8 +34,7 @@ st.subheader("Visualisasi Terpisah Pengguna Casual dan Registered.")
 # Group by daily season and calculate the mean for casual and registered users
 seasonal_data_casual = filtered_df.groupby(['season_daily'])['casual_daily'].mean().reset_index()
 seasonal_data_registered = filtered_df.groupby(['season_daily'])['registered_daily'].mean().reset_index()
-seasonal_data_casual['season_name'] = ['Spring']
-seasonal_data_casual['season_name'] = ['Summer']
+seasonal_data_casual['season_name'] = ['Spring', 'Summer', 'Fall', 'Winter']
 seasonal_data_registered['season_name'] = ['Spring', 'Summer', 'Fall', 'Winter']
 seasonal_data_casual = seasonal_data_casual.sort_values(by='casual_daily', ascending=False)
 seasonal_data_registered = seasonal_data_registered.sort_values(by='registered_daily', ascending=False)
